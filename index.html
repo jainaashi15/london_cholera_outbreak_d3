@@ -615,15 +615,15 @@ div.tooltip {
 				var datasets = d
 				var dataset_len =datasets.length
 				
-				var xScale = d3.scale.linear()
+				xscale_map = d3.scale.linear()
 						 .domain([0, d3.max(datasets, function(d) { return d[0].x; })])
 						 .range([padding, width_map - padding]);
-				xscale_map = xScale;
+				//xscale_map = xScale;
 			 
-				var yScale = d3.scale.linear()
+				yscale_map = d3.scale.linear()
 						 .domain([0, d3.max(datasets, function(d) { return d[0].y; })])
 						 .range([height_map - padding, padding]);
-				yscale_map =yScale;
+				//yscale_map =yScale;
 				
 				
 				var linepathgenerator =d3.svg.line()
