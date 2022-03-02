@@ -84,18 +84,29 @@
     color: #fff;
     background: #17A2B8;
   }
-  .slidecontainer {
-       width: 40%;
-       height: 10px;
+  .slidecontainer{
+    width: 50%;
+    height: 30px;
+   float: left;
+    padding-top: 10px;
+    border : 1px black;
+  }
+  div.sliderlabels{
+    width: 15%;
+    height: 30px;
+    float: left;
+    padding-left: 10px;
+  }
+  .slidermain {
+       width: 60%;
+       height: 30px;
       float: left;
-        padding-top: 10px;  
-        padding-left: 50px;  
-        padding-right: 5px;  
-       // border:1px solid black;
-        //background: "gray:;
+       padding-top: 10px;
+       
        
   }
   .slider{
+    
     height: 5px;
     position: relative;
     background: #ddd;
@@ -206,7 +217,7 @@
       div.main .video_link {
           width:80%;
           height:80%;
-          // background-color:#F4FFEF;
+        
           border:1px;
           backdrop-filter: blur(1000px);
       }
@@ -223,8 +234,8 @@
           
           
           padding: 0.25em 0.25em 0.25em 0.25 em;
-          //min-width: 8ch;
-          //min-height: 12px;
+          
+        
            float: right;
           width: 112px;
           height: 25px;
@@ -242,4 +253,7 @@
     box-shadow: 0 5px #666;
     transform: translateY(4px);
   }
-  
+  label{
+      width: 10%;
+      height: 15px;
+  }

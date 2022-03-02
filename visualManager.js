@@ -58,6 +58,7 @@
 			
 			const rangeInput = document.querySelectorAll(".sliderinput input");
 			range = document.querySelector(".slider .progress");
+            
 			
 			
 			
@@ -78,7 +79,8 @@
 						range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
 						//console.log("else");
 						//console.log(minVal,maxVal);
-						
+						document.getElementById("llabel").innerHTML =death_days_array[minVal].date;
+                        document.getElementById("rlabel").innerHTML =death_days_array[maxVal].date;
 						var totaldeaths =0
 						var totaldeaths1 =0
 						 for (i=0;i<deaths_age_sex_array.length;i++)
@@ -106,101 +108,11 @@
 				});
 			});
 			
-			/*
-			var left = document.querySelector('#left');
-			myRangeval = parseInt(left.value);
-			var rangeval;
-			left.oninput = function() {
-				rangeval= (this.value);
-				console.log(rangeval);
-				 var totaldeaths =0
-			 for (i=0;i<deaths_age_sex_array.length;i++)
-										{
-											count_death_array[i][3]=0;
-										};
-                                for (count_i=0;count_i<rangeval;count_i++){
-                                    totaldeaths = totaldeaths + +death_days_array[count_i].deaths
-									 
-                                };
-                              								
-			  var newdataarray =[];
-									  
-                                      for (count_j=0;count_j<totaldeaths;count_j++){
-                                         newdataarray.push(deaths_age_sex_array[count_j]);
-										 count_death_array[count_j][3]=1;};
-			d3.select("#main_map").select("svg").select("#mapdeaths").selectAll("circle").remove();
-				createdeaths(newdataarray);
-				//console.log(newdataarray);
-				
-			}*/
-			/*
-			var leftSlider = document.querySelector('#left'),
-			   rightSlider = document.querySelector('#right'),
-			   Val1 = parseInt(leftSlider.value);
-			   Val2 = parseInt(rightSlider.value);
-
-			rightSlider.oninput = function() {
-			   Val1 = parseInt(leftSlider.value);
-			   Val2 = parseInt(rightSlider.value);
-			   
-			   if (Val2 < Val1 + 4) {
-				  leftSlider.value = Val2 - 4;
-				  
-				  if (Val1 == leftSlider.min) {
-					 rightSlider.value = 4;
-				  }
-			   }
-			};
-
-
-			leftSlider.oninput = function() {
-			   Val1 = parseInt(leftSlider.value);
-			   Val2 = parseInt(rightSlider.value);
-			   
-			   if (Val1 > Val2 - 4) {
-				  rightSlider.value = Val1 + 4;
-				  
-				  if (Val2 == rightSlider.max) {
-					 leftSlider.value = parseInt(rightSlider.max) - 4;
-				  }
-
-			   }
-			};*/
-
-			/*
-		   	btn3.addEventListener('click', function handleClick() {
-			
-			
-			 var totaldeaths =0
-			 for (i=0;i<deaths_age_sex_array.length;i++)
-										{
-											count_death_array[i][3]=0;
-										};
-                                for (count_i=0;count_i<rangeval;count_i++){
-                                    totaldeaths = totaldeaths + +death_days_array[count_i].deaths
-									 
-                                };
-                              
-                                //var myid2=+dataset_d[myid].deaths;
-                              
-                                //var uptototal = totaldeaths+myid2
-								
-			  var newdataarray =[];
-									  
-                                      for (count_j=0;count_j<totaldeaths;count_j++){
-                                         newdataarray.push(deaths_age_sex_array[count_j]);
-										 count_death_array[count_j][3]=1;};
-			d3.select("#main_map").select("svg").select("#mapdeaths").selectAll("circle").remove();
-				createdeaths(newdataarray);
-				console.log(newdataarray);
-				
-				
-				});*/
 			
 			
 		   //Main_map
-            var xscale_map ;
-            var yscale_map ;
+            var xscale_map =null;
+            var yscale_map =null;
             var width_map = 600;
             var height_map = 600;
             var padding = 10;
