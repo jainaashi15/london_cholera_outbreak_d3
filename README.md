@@ -1,2 +1,2 @@
 # london_cholera_outbreak_d3
-Educational Project on d3Js
+Educational Project on d3Js created by Ayushi Jain
