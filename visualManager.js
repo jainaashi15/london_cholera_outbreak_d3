@@ -42,7 +42,7 @@
 				});
 		   
 		   popupDialog.addEventListener('close', function onClose() {
-			  console.log(popupDialog.returnValue);
+			  //console.log(popupDialog.returnValue);
 			  createGrid(popupDialog.returnValue);
 				flagdeaths =0;
 				btn.textContent = 'Remove';
@@ -335,7 +335,7 @@
 					{
 						deaths_age_sex_array.push(datasetd[i]);
 					}
-					console.log(deaths_age_sex_array);
+					//console.log(deaths_age_sex_array);
 //Plot deaths on main_map
 
 					createdeaths(datasetd);
@@ -346,7 +346,7 @@
 					{
 						count_death_array.push([i,xscale_map(datasetd[i].x),yscale_map(datasetd[i].y),1]);
 					};
-					console.log(count_death_array);
+					//console.log(count_death_array);
 					
                   
                                                    
@@ -367,7 +367,7 @@
                     for(i=0;i<totals.length;i++){
                             totals[i][4] = formatDecimal((totals[i][0]/total_death)*100) ;
                           };
-                          console.log(totals);
+                          //console.log(totals);
                           
 
                           //console.log(total_death);                          
@@ -635,7 +635,7 @@
 					for(j=t_c;j< up_t ;j++)
 					{
 						//console.log("j",j);
-						deaths_age_sex_array[j].date = dataset_d[i].date;
+						deaths_age_sex_array[j].date = death_days_array[i].date;
 					}
 			   }
 			   //console.log("new",deaths_age_sex_array);
