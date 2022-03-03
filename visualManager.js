@@ -43,24 +43,24 @@ btn2.addEventListener('click', function handleClick() {
         createdeaths_gif(deaths_age_sex_array);     
 });
 
-const rangeInput = document.querySelectorAll(".sliderinput input");
+const sliderInput = document.querySelectorAll(".sliderinput input");
 range = document.querySelector(".slider .progress");
 
-rangeInput.forEach(input =>{
+sliderInput.forEach(input =>{
     input.addEventListener("input", e =>{
-        let minVal = parseInt(rangeInput[0].value),
-        maxVal = parseInt(rangeInput[1].value);
+        let minVal = parseInt(sliderInput[0].value),
+        maxVal = parseInt(sliderInput[1].value);
         if((maxVal - minVal) < 1){
             if(e.target.className === "left"){
-                rangeInput[0].value = maxVal - 1
+                sliderInput[0].value = maxVal - 1
             }else{
-                rangeInput[1].value = minVal + 1;
+                sliderInput[1].value = minVal + 1;
             }
         }else{
             
-            range.style.left = ((minVal / rangeInput[0].max) * 100) + "%";
-            range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
-           
+            range.style.left = ((minVal / sliderInput[0].max) * 100) + "%";
+            range.style.right = 100 - (maxVal / sliderInput[1].max) * 100 + "%";
+            //console.log(minVal,maxVal,rangeInput[0].max,rangeInput[1].max);
             document.getElementById("llabel").innerHTML =death_days_array[minVal].date;
             document.getElementById("rlabel").innerHTML =death_days_array[maxVal].date;
             var totaldeaths =0
@@ -109,12 +109,19 @@ var totals =[
                 [0,0,0,"61-80",0],
                 [0,0,0,">80",0]
             ];
-                
+
+                          
 var div = d3.select("body").append("div")
             .attr("class", "tooltip")
             .style("opacity", 0);	
+
 var svg_map = d3.select("body").select("#full-page").select("#main").select("#main_map")
                 .append("svg")
+                .attr("id","mapsvg")
+                //.call(d3.behavior.zoom().scale(1)
+               // .scaleExtent([1, 8]).on("zoom", function () {
+                //    svg_map.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+                //  }))
                 .attr("width", width_map)
                 .attr("height", height_map);
 
@@ -354,7 +361,7 @@ d3.csv("deaths_age_sex.csv", function(data) {
                 return yScale(0)- yScale(totals[i][0])   ;
             })
             .attr("fill", function(d) {
-                return "#993404";
+                return "#252525";
             })
             .on("mouseover", function() {
                 d3.select(this)
@@ -372,7 +379,7 @@ d3.csv("deaths_age_sex.csv", function(data) {
             })
         .on("mouseout", function(d) {
                 d3.select(this)
-                    .attr("fill", "#993404");
+                    .attr("fill", "#252525");
                 d3.select("body").select("#full-page").select("#foot").select("#foot_MFpie").select("#svgpie").remove();
                 createpie(6,totalMF);                  
                 div.transition()
@@ -566,12 +573,12 @@ d3.csv("deathdays.csv", function(d) {
                 return yScale(0) - yScale(d.deaths)   ;
             })
             .attr("fill", function(d) {
-                return "#993404";
+                return "#252525";
             })
             .on("mouseover", function() {
                 if(flag_mouse == 0){
                 svg.selectAll("rect").attr("fill", function(d) {
-                    return "#993404";
+                    return "#252525";
                 });
                 d3.select(this)
                     .attr("fill", "#ec7014");
@@ -602,15 +609,16 @@ d3.csv("deathdays.csv", function(d) {
                
                 d3.select("#main_map").select("svg").select("#mapdeaths").selectAll("circle").remove();
                 createdeaths(newdataarray);
+               
                 }
             })
             .on("click", function() {
                 if(flag_mouse ==0){flag_mouse = 1;}
                 else{flag_mouse = 0;
                 d3.select(this)
-                        .attr("fill", "#993404");
+                        .attr("fill", "#252525");
                 d3.select(this)
-                        .attr("fill", "#993404");
+                        .attr("fill", "#252525");
                         
                 d3.select("#main_map").select("svg").select("#mapdeaths").selectAll("circle").remove();
                         
@@ -629,7 +637,7 @@ d3.csv("deathdays.csv", function(d) {
                             .style("opacity", 0);
                 if(flag_mouse ==0){
                     d3.select(this)
-                    .attr("fill", "#993404");
+                    .attr("fill", "#252525");
                     d3.select("#main_map").select("svg").select("#mapdeaths").selectAll("circle").remove();
                     for (i=0;i<deaths_age_sex_array.length;i++)
                         {
@@ -789,7 +797,9 @@ function createdeaths_gif(dataarray){
                             div.transition()
                                 .duration('50')
                                 .style("opacity", 0);
-                    });       
+                    });   
+                
+        
         svg_map.select("#mapdeaths").selectAll("circle")
                 .transition()
                 .delay(function(d,i){return 40*i;})
