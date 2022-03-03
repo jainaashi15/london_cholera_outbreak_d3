@@ -1,10 +1,77 @@
 
 var dialog = null;
+
+//Main_map
+var xscale_map =null;
+var yscale_map =null;
+var width_map = 600;
+var height_map = 600;
+var padding = 10;
+//var barPadding = 2;
+var flagdeaths =1;
+var flag_mouse =0;
+var griddetails =[];    
+var count_death_array =[];
+
+var deaths_age_sex_array =[];
+var death_days_array =[];
+var totalMF = [[0,0,0,0,0,0,0,"M"],[0,0,0,0,0,0,0,"F"]];
+var totals =[
+                [0,0,0,"0-10",0],
+                [0,0,0,"11-20",0],
+                [0,0,0,"21-20",0],
+                [0,0,0,"41-60",0],
+                [0,0,0,"61-80",0],
+                [0,0,0,">80",0]
+            ];
+
+                          
+var div = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);	
+
+var svg_map = d3.select("body").select("#full-page").select("#main").select("#main_map")
+                .append("svg")
+                .attr("id","mapsvg")
+                //.call(d3.behavior.zoom().scale(1)
+               // .scaleExtent([1, 8]).on("zoom", function () {
+                //    svg_map.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+                //  }))
+                .attr("width", width_map)
+                .attr("height", height_map);
+
 (function loadVideoDialog(){
 dialog = document.getElementById('videoDialog');
 document.getElementById('hide').onclick = function(){
     dialog.close();
     };
+
+    //Plotting the map streets
+d3.json("streets.json", function(d) {
+    var datasets = d;
+    xscale_map = d3.scale.linear()
+                .domain([0, d3.max(datasets, function(d) { return d[0].x; })])
+                .range([padding, width_map - padding]);
+    yscale_map = d3.scale.linear()
+                .domain([0, d3.max(datasets, function(d) { return d[0].y; })])
+                .range([height_map - padding, padding]);
+    var linepathgenerator =d3.svg.line()
+            .x(function (d) {return xscale_map(d.x) ;})
+            .y(function (d) {return yscale_map(d.y) ;})
+            .interpolate("linear");
+    var svg_map_lines =svg_map.append("g")
+                            .attr("class", "maplines")
+                            .attr("transform", "translate(0,0)");
+    for (count_i=0;count_i<datasets.length;count_i++){
+        var dataset_step1 = datasets[count_i];
+        svg_map_lines.append("path")
+            .attr("stroke", "#252525")
+            .attr("stroke-width", "2px")
+            .attr("fill","none")
+            .attr("d", linepathgenerator(dataset_step1));
+    };
+});   
+
 })();
 
 function showEmbeddedVideo(){
@@ -86,45 +153,6 @@ sliderInput.forEach(input =>{
     });
 });
 
-//Main_map
-var xscale_map =null;
-var yscale_map =null;
-var width_map = 600;
-var height_map = 600;
-var padding = 10;
-//var barPadding = 2;
-var flagdeaths =1;
-var flag_mouse =0;
-var griddetails =[];    
-var count_death_array =[];
-
-var deaths_age_sex_array =[];
-var death_days_array =[];
-var totalMF = [[0,0,0,0,0,0,0,"M"],[0,0,0,0,0,0,0,"F"]];
-var totals =[
-                [0,0,0,"0-10",0],
-                [0,0,0,"11-20",0],
-                [0,0,0,"21-20",0],
-                [0,0,0,"41-60",0],
-                [0,0,0,"61-80",0],
-                [0,0,0,">80",0]
-            ];
-
-                          
-var div = d3.select("body").append("div")
-            .attr("class", "tooltip")
-            .style("opacity", 0);	
-
-var svg_map = d3.select("body").select("#full-page").select("#main").select("#main_map")
-                .append("svg")
-                .attr("id","mapsvg")
-                //.call(d3.behavior.zoom().scale(1)
-               // .scaleExtent([1, 8]).on("zoom", function () {
-                //    svg_map.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
-                //  }))
-                .attr("width", width_map)
-                .attr("height", height_map);
-
 //function to create grids
 function createGrid(num){	
     var clusterRange = (width_map-100)/num;
@@ -166,31 +194,7 @@ function createGrid(num){
     }
 }	
 
-//Plotting the map streets
-d3.json("streets.json", function(d) {
-    var datasets = d;
-    xscale_map = d3.scale.linear()
-                .domain([0, d3.max(datasets, function(d) { return d[0].x; })])
-                .range([padding, width_map - padding]);
-    yscale_map = d3.scale.linear()
-                .domain([0, d3.max(datasets, function(d) { return d[0].y; })])
-                .range([height_map - padding, padding]);
-    var linepathgenerator =d3.svg.line()
-            .x(function (d) {return xscale_map(d.x) ;})
-            .y(function (d) {return yscale_map(d.y) ;})
-            .interpolate("linear");
-    var svg_map_lines =svg_map.append("g")
-                            .attr("class", "maplines")
-                            .attr("transform", "translate(0,0)");
-    for (count_i=0;count_i<datasets.length;count_i++){
-        var dataset_step1 = datasets[count_i];
-        svg_map_lines.append("path")
-            .attr("stroke", "#252525")
-            .attr("stroke-width", "2px")
-            .attr("fill","none")
-            .attr("d", linepathgenerator(dataset_step1));
-    };
-});   
+
 
 //count deaths in a grid
 function count_deaths_in_grid(gridnum){
@@ -361,7 +365,7 @@ d3.csv("deaths_age_sex.csv", function(data) {
                 return yScale(0)- yScale(totals[i][0])   ;
             })
             .attr("fill", function(d) {
-                return "#252525";
+                return "#525252";
             })
             .on("mouseover", function() {
                 d3.select(this)
@@ -379,7 +383,7 @@ d3.csv("deaths_age_sex.csv", function(data) {
             })
         .on("mouseout", function(d) {
                 d3.select(this)
-                    .attr("fill", "#252525");
+                    .attr("fill", "#525252");
                 d3.select("body").select("#full-page").select("#foot").select("#foot_MFpie").select("#svgpie").remove();
                 createpie(6,totalMF);                  
                 div.transition()
@@ -518,7 +522,7 @@ d3.csv("deathdays.csv", function(d) {
     for(i=0;i<dataset_d.length;i++){
         death_days_array.push(dataset_d[i]);
     }
-    /*
+    
     var t_c =0;
     var t_n =0;
     var up_t =0;
@@ -535,8 +539,8 @@ d3.csv("deathdays.csv", function(d) {
             deaths_age_sex_array[j].date = death_days_array[i].date;
         }
     }
-    //console.log("new",deaths_age_sex_array);
-    */
+    console.log("new",deaths_age_sex_array);
+    
 
     var xScale = d3.scale.ordinal()
         .domain(d3.range(dataset_d.length))
@@ -573,12 +577,12 @@ d3.csv("deathdays.csv", function(d) {
                 return yScale(0) - yScale(d.deaths)   ;
             })
             .attr("fill", function(d) {
-                return "#252525";
+                return "#525252";
             })
             .on("mouseover", function() {
                 if(flag_mouse == 0){
                 svg.selectAll("rect").attr("fill", function(d) {
-                    return "#252525";
+                    return "#525252";
                 });
                 d3.select(this)
                     .attr("fill", "#ec7014");
@@ -616,9 +620,8 @@ d3.csv("deathdays.csv", function(d) {
                 if(flag_mouse ==0){flag_mouse = 1;}
                 else{flag_mouse = 0;
                 d3.select(this)
-                        .attr("fill", "#252525");
-                d3.select(this)
-                        .attr("fill", "#252525");
+                        .attr("fill", "#525252");
+                
                         
                 d3.select("#main_map").select("svg").select("#mapdeaths").selectAll("circle").remove();
                         
@@ -637,7 +640,7 @@ d3.csv("deathdays.csv", function(d) {
                             .style("opacity", 0);
                 if(flag_mouse ==0){
                     d3.select(this)
-                    .attr("fill", "#252525");
+                    .attr("fill", "#525252");
                     d3.select("#main_map").select("svg").select("#mapdeaths").selectAll("circle").remove();
                     for (i=0;i<deaths_age_sex_array.length;i++)
                         {
@@ -750,6 +753,7 @@ function createdeaths(dataarray){
 
 function createdeaths_gif(dataarray){ 
         datasetd = dataarray; 
+        var i=0;
         var rectd = svg_map_deaths.selectAll("rectd")
                     .data(datasetd)
                     .enter()
@@ -798,12 +802,31 @@ function createdeaths_gif(dataarray){
                                 .duration('50')
                                 .style("opacity", 0);
                     });   
-                
-        
+        var text = svg_map_deaths.selectAll("textd")
+                    .data(deaths_age_sex_array)
+                    .enter()
+                    .append("text")
+                .attr("x", (80 / 2))             
+                .attr("y", 220 )
+                .attr("text-anchor", "middle") 
+                .attr("font-family", "arial")								
+                .style("font-size", "20px") 
+                .style("text-decoration", "underline")  
+                .text(function(d,i){
+                        return deaths_age_sex_array[i].date;  
+                    })
+                .attr("opacity","0"); 
         svg_map.select("#mapdeaths").selectAll("circle")
                 .transition()
-                .delay(function(d,i){return 40*i;})
-                .duration(500)
+                .delay(function(d,i){
+                    return 40*i;
+                   /* if (i<12)
+                    {return 120*i;} 
+                    else if (i>543) 
+                    {return 120*i;} 
+                    else 
+                {return 40*i;} */})
+                .duration(100)
                 .each("start", function() {      
                         d3.select(this)
                             .attr("r", 6);   
@@ -823,6 +846,27 @@ function createdeaths_gif(dataarray){
                 })
                 .ease("circle")
                 .attr("opacity",0.9);
+            svg_map.select("#mapdeaths").selectAll("text")
+                .transition()
+                .delay(function(d,i){
+                    return 40*i;
+                    /* if (i<12)
+                     {return 120*i;} 
+                     else if (i>543) 
+                     {return 120*i;} 
+                     else 
+                {return 40*i;} */})
+                .duration(100)
+                .each("start", function() {      
+                        d3.select(this)
+                        .attr("opacity",1);   
+                })
+                .each("end", function() {        
+                    var myid = this.id
+                        d3.select(this)
+                        .attr("opacity",0);
+                });
+                
 }; 
 
 var div_tooptip = d3.select("body").append("div")

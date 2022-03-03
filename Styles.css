@@ -246,7 +246,7 @@
       .gridbutton{
           display: inline-flex;
                   
-          background-color: #252525;
+          background-color: #525252;
           color: white;
           border-radius: 5px;
           box-shadow: 0 3px 5px rgba(0,0,0,0.2);
@@ -270,7 +270,7 @@
       .gridbutton:hover {background-color: #969696}
   
   .gridbutton:active {
-    background-color: #252525;
+    background-color: #525252;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
   }
