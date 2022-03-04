@@ -552,7 +552,7 @@ d3.csv("deathdays.csv", function(d) {
             deaths_age_sex_array[j].date = death_days_array[i].date;
         }
     }
-    console.log("new",deaths_age_sex_array);
+    //console.log("new",deaths_age_sex_array);
     
 
     var xScale = d3.scale.ordinal()
