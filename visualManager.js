@@ -14,6 +14,7 @@ var griddetails =[];
 var count_death_array =[];
 
 var deaths_age_sex_array =[];
+var streets_array =[];
 var death_days_array =[];
 var totalMF = [[0,0,0,0,0,0,0,"M"],[0,0,0,0,0,0,0,"F"]];
 var totals =[
@@ -49,6 +50,11 @@ document.getElementById('hide').onclick = function(){
     //Plotting the map streets
 d3.json("streets.json", function(d) {
     var datasets = d;
+    for(i=0;i<datasets.length;i++)
+    {
+        streets_array.push(datasets[i]);
+    };
+    
     xscale_map = d3.scale.linear()
                 .domain([0, d3.max(datasets, function(d) { return d[0].x; })])
                 .range([padding, width_map - padding]);
@@ -107,7 +113,7 @@ popupDialog.addEventListener('close', function onClose() {
 
 btn2.addEventListener('click', function handleClick() {
         d3.select("#main_map").select("svg").select("#mapdeaths").selectAll("circle").remove();
-        createdeaths_gif(deaths_age_sex_array);     
+        createdeaths_gif(deaths_age_sex_array,xscale_map,yscale_map);     
 });
 
 const sliderInput = document.querySelectorAll(".sliderinput input");
@@ -148,7 +154,7 @@ sliderInput.forEach(input =>{
                 count_death_array[count_j][3]=1;
             };
             d3.select("#main_map").select("svg").select("#mapdeaths").selectAll("circle").remove();
-            createdeaths(newdataarray);
+            createdeaths(newdataarray,xscale_map,yscale_map);
         }
     });
 });
@@ -232,7 +238,13 @@ function count_deaths_in_grid(gridnum){
 //Plotting the pumps on the map
 
 d3.csv("pumps.csv", function(data) {
-    datasetp = data;    
+    datasetp = data;   
+    xscale = d3.scale.linear()
+        .domain([0, d3.max(streets_array, function(d) { return d[0].x; })])
+        .range([padding, width_map - padding]);
+    yscale = d3.scale.linear()
+        .domain([0, d3.max(streets_array, function(d) { return d[0].y; })])
+        .range([height_map - padding, padding]);
     var svg_map_pump =svg_map.append("g")
                 .attr("class", "mappumps")
                 .attr("transform", "translate(10,10)");
@@ -241,10 +253,10 @@ d3.csv("pumps.csv", function(data) {
                     .enter()
                     .append("circle")
                     .attr("cx", function(d,i) {
-                        return xscale_map(datasetp[i].x);  
+                        return xscale(datasetp[i].x);  
                     })
                         .attr("cy", function(d,i) {
-                        return yscale_map(datasetp[i].y);  
+                        return yscale(datasetp[i].y);  
                     })
                         .attr("r", function(d) {
                         return 6;
@@ -286,6 +298,8 @@ var g = svg_map.append("g")
                             
 d3.csv("deaths_age_sex.csv", function(data) {
     var temp
+    var xscale = xscale_map; 
+    var yscale = yscale_map;
     datasetd = data; 
     for(i=0;i<datasetd.length;i++)
     {
@@ -293,10 +307,10 @@ d3.csv("deaths_age_sex.csv", function(data) {
     }
     
 //Plot deaths on main_map
-    createdeaths(datasetd);
+    createdeaths(datasetd,xscale_map,yscale_map);
     for (i=0;i<datasetd.length;i++)
     {
-        count_death_array.push([i,xscale_map(datasetd[i].x),yscale_map(datasetd[i].y),1]);
+        count_death_array.push([i,xscale(datasetd[i].x),yscale(datasetd[i].y),1]);
     };                           
     for (i=0;i<datasetd.length;i++){
                     var rangenum = +datasetd[i].age;
@@ -612,7 +626,7 @@ d3.csv("deathdays.csv", function(d) {
                     };
                
                 d3.select("#main_map").select("svg").select("#mapdeaths").selectAll("circle").remove();
-                createdeaths(newdataarray);
+                createdeaths(newdataarray,xscale_map,yscale_map);
                
                 }
             })
@@ -631,7 +645,7 @@ d3.csv("deathdays.csv", function(d) {
                         count_death_array[i][3]=1;
                     };
                 
-                createdeaths(deaths_age_sex_array);
+                createdeaths(deaths_age_sex_array,xscale_map,yscale_map);
                 }
             })
             .on("mouseout", function(d) {
@@ -646,7 +660,7 @@ d3.csv("deathdays.csv", function(d) {
                         {
                             count_death_array[i][3]=1;
                         };
-                    createdeaths(deaths_age_sex_array);
+                    createdeaths(deaths_age_sex_array,xscale_map,yscale_map);
                 };
             });
                 
@@ -697,9 +711,9 @@ var svg_map_deaths =svg_map.append("g")
                     .attr("transform", "translate(0,0)");
 
 //function to plot deaths on map	 
-function createdeaths(dataarray){ 
+function createdeaths(dataarray,xscale_map,yscale_map){ 
         datasetd = dataarray; 
-
+    
         var rectd = svg_map_deaths.selectAll("rectd")
                     .data(datasetd)
                     .enter()
@@ -751,7 +765,7 @@ function createdeaths(dataarray){
                     });
 }; 
 
-function createdeaths_gif(dataarray){ 
+function createdeaths_gif(dataarray,xscale_map,yscale_map){ 
         datasetd = dataarray; 
         var i=0;
         var rectd = svg_map_deaths.selectAll("rectd")
