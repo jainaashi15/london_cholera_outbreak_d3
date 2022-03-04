@@ -301,11 +301,13 @@ d3.csv("deaths_age_sex.csv", function(data) {
     var xscale = xscale_map; 
     var yscale = yscale_map;
     datasetd = data; 
+    console.log("old",data);
     for(i=0;i<datasetd.length;i++)
     {
-        deaths_age_sex_array.push(datasetd[i]);
+        var date = "1"
+        deaths_age_sex_array.push([datasetd[i].x,datasetd[i].y,datasetd[i].age,datasetd[i].gender,date]);
     }
-    
+    //console.log("new",deaths_age_sex_array);
 //Plot deaths on main_map
     createdeaths(datasetd,xscale_map,yscale_map);
     for (i=0;i<datasetd.length;i++)
@@ -553,7 +555,7 @@ d3.csv("deathdays.csv", function(d) {
             deaths_age_sex_array[j].date = death_days_array[i].date;
         }
     }
-    console.log("new",deaths_age_sex_array);
+   // console.log("new",deaths_age_sex_array);
     
 
     var xScale = d3.scale.ordinal()
