@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Visualization</title>
+       <link rel="stylesheet"  href="Styles.css">
+        <script type="text/javascript" src="d3/d3.v3.js">
+          
+        </script>
+    </head>
+    <body>
+       <div id="full-page">
+        <div id="head" class ="head">London Cholera Map 1854 - D3 Visualization</div>
+            <div id="menu" class ="menu">  
+			<a href="index.html">Home</a>
+			<a href="document.html">Document</a>
+			<a id="show" href='javascript:;' onclick='showEmbeddedVideo();'>Video</a>
+			<a href="Aboutt">About</a>
+			 
+			</div>
+			<div id="body">
+        
+				<div id="main_video_link" class="main_video_link">
+					<dialog id="videoDialog" class="video_link">
+						<iframe width="100%" height="95%" src="https://www.youtube.com/embed/26CWhh9w1zU" title="Video Presentation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<br/>
+						<button id="hide">Close</button>
+					</dialog>
+				</div>
+     
+				<div id ="document" class ="document">
+          
+          <h1>Created by</h1>
+          <img src="myimg.JPG"> 
+				<p>Ayushi Jain <br> email: jainaashi15@gmail.com </p>
+        
+      
+				</div>
+				
+			  </div>
+       </div>
+
+
+ 
+       <script type="text/javascript">
+									
+
+        var dialog = null;
+        (function loadVideoDialog(){
+        dialog = document.getElementById('videoDialog');
+        document.getElementById('hide').onclick = function(){
+            dialog.close();
+            };
+        })();
+
+        function showEmbeddedVideo(){
+            if(dialog != null){dialog.showModal();}
+            else return true;
+        };
+  
+
+
+
+
+  </script>
+    </body>
+</html>

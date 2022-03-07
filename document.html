@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Visualization</title>
+       <link rel="stylesheet"  href="Styles.css">
+        <script type="text/javascript" src="d3/d3.v3.js">
+          
+        </script>
+    </head>
+    <body>
+       <div id="full-page">
+        <div id="head" class ="head">London Cholera Map 1854 - D3 Visualization</div>
+            <div id="menu" class ="menu">  
+			<a href="index.html">Home</a>
+			<a href="document.html">Document</a>
+			<a id="show" href='javascript:;' onclick='showEmbeddedVideo();'>Video</a>
+			<a href="About.html">About</a>
+			 
+			</div>
+			<div id="body">
+        
+				<div id="main_video_link" class ="main_video_link">
+					<dialog id="videoDialog" class="video_link">
+						<iframe width="100%" height="95%" src="https://www.youtube.com/embed/26CWhh9w1zU" title="Video Presentation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<br/>
+						<button id="hide">Close</button>
+					</dialog>
+				</div>
+      
+				<div id ="document" class ="document">
+          <h1>Summary</h1>
+				<p> An outbreak hit the board street in London in the 1854 known as the London cholera epidemic of 1854. Dr John snow created a map of deaths in the area and established a link between the deaths to the contaminated water pump. This was the first ever created visualization which did a pictorial representation of the data and provided insightful information.</p>
+        <p>As part of this project, we are required to re-create the map using d3 which could help someone like Dr. John Snow to understand, experiment and conclude the research of relating the deaths occurring in the area with the water source. </p>
+        <h1>Input </h1>
+        <p>To recreate the map, we are provided with the following files
+        <br>  1.	A JSON file which has the (x,y) co-ordinates in segments like [ [{x1,y1},{x2,y2},{x3,y3}..],[…],….]
+        <br>  2.	A csv file of deaths on each day of the outbreak
+        <br>  3.	A csv file of the location of the death, age and gender in sequence of deaths occurred in file 2.
+        <br>  4.	A general census of 1850, giving the percentage of people in each age group.
+          </p>
+          <h1>Design</h1>
+          <img src="design1.JPG">
+          <p>Initial Design to create a map showing deaths and a timeline bar graph showing the deaths on each day</p>
+          <br>
+          <img src="design2.JPG">
+          <p>Final design was more refined.
+            Firstly added additional visuals to compare the census percentage by age group with the death percentage by
+            age group. Secondly added visuals for the Deaths by age group and a pie chart to show the male deaths to female deaths. Apart from the visuals
+            added the functionality to select the number of grids and then draw the grids on the map. Also added a range slider to filter the deaths on
+            the map from the date range.
+          </p>
+          <br>
+          <h1>Process</h1>
+          <img src="process1.JPG">
+          <p>The process was to build the visual is described in the above image. </p>
+          <h1>Output</h1>
+          <p>I’ve created a dashboard of the following items which depicts the data and has ability to interact with the data to deduce meaningful insight about the data like “which age group was most impacted by the outbreak?”, “what was the percentage of population of that age group?”, “what was the ratio of male to female deaths in each age group?”, etc.
+            <br><br> 1.	Map of London which shows the deaths, gender and age of the deceased.
+            <br> 2.	A time line bar graph, where each bar depicts the total deaths on each day.
+            <br>  3.	A pair of donut charts. First shows the census by age group and the second shows the deaths by age group.
+            <br> 4.	A bar chart showing the total deaths in each age group and a pie chart showing the male to female ratio of deaths.
+            <br> 5.	Ability to draw grid lines based on a number n which generates n X n grids on the map and hover over the grid to see the total deaths within the grid.
+            <br> 6.	A range slider to see specific range of days’ death on the map.<br><br>
+            <img class="dashboardimg" src="finaldashboard.JPG" href="index.html">
+            <br><br>Apart from these I’ve also added a “show deaths” button which animates the deaths on the map occurred by date. Basically, it shows where the deaths began and where people died during the outbreak by passing time.
+            <br>
+            <br>
+            <img src="showdeaths.gif" alt="Deaths gif" >
+            <br><br>
+          </p>
+				</div>
+				
+			  </div>
+       </div>
+
+
+ 
+       <script type="text/javascript">
+									
+
+        var dialog = null;
+        (function loadVideoDialog(){
+        dialog = document.getElementById('videoDialog');
+        document.getElementById('hide').onclick = function(){
+            dialog.close();
+            };
+        })();
+
+        function showEmbeddedVideo(){
+            if(dialog != null){dialog.showModal();}
+            else return true;
+        };
+  
+
+
+
+
+  </script>
+    </body>
+</html>
