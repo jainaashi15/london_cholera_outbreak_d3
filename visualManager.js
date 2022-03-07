@@ -712,7 +712,12 @@ var svg_map_deaths =svg_map.append("g")
 //function to plot deaths on map	 
 function createdeaths(dataarray){ 
         datasetd = dataarray; 
-
+        xscale_map = d3.scale.linear()
+            .domain([0, d3.max(streets_array, function(d) { return d[0].x; })])
+            .range([padding, width_map - padding]);
+        yscale_map = d3.scale.linear()
+            .domain([0, d3.max(streets_array, function(d) { return d[0].y; })])
+            .range([height_map - padding, padding]);
         var rectd = svg_map_deaths.selectAll("rectd")
                     .data(datasetd)
                     .enter()
@@ -766,6 +771,12 @@ function createdeaths(dataarray){
 
 function createdeaths_gif(dataarray){ 
         datasetd = dataarray; 
+        xscale_map = d3.scale.linear()
+            .domain([0, d3.max(streets_array, function(d) { return d[0].x; })])
+            .range([padding, width_map - padding]);
+        yscale_map = d3.scale.linear()
+            .domain([0, d3.max(streets_array, function(d) { return d[0].y; })])
+            .range([height_map - padding, padding]);
         var i=0;
         var rectd = svg_map_deaths.selectAll("rectd")
                     .data(datasetd)
