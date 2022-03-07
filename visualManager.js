@@ -1,5 +1,6 @@
 
 var dialog = null;
+var dialog1 = null;
 
 //Main_map
 var xscale_map =null;
@@ -47,6 +48,10 @@ document.getElementById('hide').onclick = function(){
     dialog.close();
     };
 
+dialog1 = document.getElementById('helpDialog');
+document.getElementById('hide_help').onclick = function(){
+    dialog1.close();
+    };
     //Plotting the map streets
 d3.json("streets.json", function(d) {
     var datasets = d;
@@ -84,7 +89,10 @@ function showEmbeddedVideo(){
     if(dialog != null){dialog.showModal();}
     else return true;
 };
-
+function showhelp(){
+    if(dialog1 != null){dialog1.showModal();}
+    else return true;
+};
 var popupDialog = document.getElementById('popupDialog');
 var selectval = document.querySelector('select');
 var okBtn = document.getElementById('okBtn');
