@@ -16,11 +16,18 @@
 			<a href="document.html">Document</a>
 			<a id="show" href='javascript:;' onclick='showEmbeddedVideo();'>Video</a>
 			<a href="About.html">About</a>
-			 
+			<a id="help" href='javascript:;' onclick='showhelp();'>Help</a>
 			</div>
 			<div id="body">
             <div id="main" class ="main">
                 <div id="main_map" class ="main_map">
+					<dialog id="helpDialog">
+						
+						  <p><label>In case of any issues with the page load, please refresh the page<br> Please feel free to contact me, if needed.						
+						  </label></p>
+						  <button id="hide_help">Ok</button>
+						
+					  </dialog>
 					<dialog id="popupDialog">
 					  <form method="dialog">
 						<p><label>Select number of grids:
